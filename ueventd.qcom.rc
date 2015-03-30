@@ -10,7 +10,7 @@
 /dev/binder               0666   root       root
 /dev/rtc0                 0660   system     system
 /dev/tspdrv               0666   root       root
-/dev/ttyHSL0		  0660   radio      system
+/dev/ttyHSL0              0660   radio      system
 # logger should be world writable (for logging) but not readable
 /dev/log/*                0662   root       log
 
@@ -18,7 +18,7 @@
 /dev/msm_hw3dc            0666   root       root
 
 # the DIAG device node is not world writable/readable.
-/dev/diag                 0660   system     qcom_diag
+/dev/diag                 0660   radio      radio
 
 # the genlock client device node is world writable/readable.
 /dev/genlock              0666   system     system
@@ -93,8 +93,8 @@
 /dev/snd/mixer            0660   system     audio
 /dev/msm_pcm_lp_dec       0660   system     audio
 /dev/smd4                 0660   system     system
-/dev/smd3                 0660   bluetooth      bluetooth
-/dev/smd2                 0660   bluetooth      bluetooth
+/dev/smd3                 0660   bluetooth      net_bt_stack
+/dev/smd2                 0660   bluetooth      net_bt_stack
 /dev/smd0                 0640   radio      radio
 /dev/smd7                 0660   bluetooth  bluetooth
 /dev/smdcntl0             0640   radio      radio
@@ -145,7 +145,7 @@
 /dev/block/mmcblk0p17     0660   system     system
 /dev/block/mmcblk0p18     0660   system     system
 /dev/usb_accessory        0660   root       usb
-/dev/video*	          0660   system     camera 
+/dev/video*               0660   system     camera
 /dev/tun                  0660   system     vpn
 #regular apps need to be able to open ion
 /dev/ion                  0664   system     system
@@ -156,10 +156,17 @@
 # CDMA radio interface MUX
 /dev/ts0710mux*           0640   radio      radio
 /dev/ppp                  0660   radio      vpn
+/dev/smd_cxm_qmi          0640   radio      radio
+/sys/devices/virtual/smdpkt/smdcntl*       open_timeout   0664 radio radio
+
+# MDM devices
+/dev/block/mmcblk0p13     0660  system      radio
+/dev/block/mmcblk0p14     0660  system      radio
+/dev/block/mmcblk0p15     0660  system      radio
 
 # sysfs properties
-/sys/devices/virtual/input/input*   enable      0660  root   input
-/sys/devices/virtual/input/input*   poll_delay  0660  root   input
+/sys/devices/virtual/input/input*       poll_delay      0660    system  radio
+/sys/devices/virtual/input/input*       enable          0660    system  radio
 #permissions for video
 /dev/msm_vidc_reg         0660  system       audio
 /dev/msm_vidc_dec         0660  system       audio
@@ -207,7 +214,7 @@
 /dev/dun               0660   system     system
 
 # for PL2303 driver
-/dev/ttyUSB0           0666   system   	 system
+/dev/ttyUSB0           0660   system     radio
 
 # wlan
 /dev/wcnss_wlan           0660   system     system
